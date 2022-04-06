@@ -1,0 +1,46 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Mulish', sans-serif;
+}
+
+body {
+    padding-bottom: 70px;
+}
+
+.img-user {
+    border-radius: 50%;
+    width: 11%;
+    height: 100%;
+}
+
+.title-forum h5 {
+    font-weight: 600;
+}
+
+.categories {
+    font-size: 1.3em;
+}
+
+.nav-items >  a:hover {
+    background-color: blanchedalmond;
+}
+
+.activePage {
+    background-color: blanchedalmond;
+}
+
+.forum-items:hover {
+    background-color: rgba(255, 235, 205, 0.411);
+}
+
+.sticky-top {
+    top: 2.5em;
+}
+
+.img-posted {
+    width: 50%;
+    margin-bottom: 20px;
+}
+
