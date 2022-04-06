@@ -42,14 +42,13 @@
                 </div>
             </div>
             <div class="col-lg-9 mt-5 mr-5">
-                <div class="col-lg-2">
+                <div class="col-lg-3">
                     <form action="" method="GET">
-                        Filter discussion by:
                         <select class="form-select" id="sort" name="sort" onchange="form.submit()">
                             <option value="latest" {{ request('sort') === 'latest' ? 'selected' : '' }}>
-                                Latest</option>
+                                Filter By: Latest</option>
                             <option value="oldest" {{ request('sort') === 'oldest' ? 'selected' : '' }}>
-                                Oldest</option>
+                                Filter By: Oldest</option>
                         </select>
                     </form>
                 </div>
