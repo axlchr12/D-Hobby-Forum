@@ -25,8 +25,9 @@
                         @endif
                         <p class="mt-3">
                             @if ($posts->image_discussion)
-                                <a href="/img/img-posted-user/3.jpg" data-toggle="lightbox">
-                                    <img src="/img/img-posted-user/3.jpg" alt="img-posted-user" class="img-posted">
+                                <a href="{{ asset('storage/' . $posts->image_discussion) }}" data-toggle="lightbox">
+                                    <img src="{{ asset('storage/' . $posts->image_discussion) }}" alt="img-posted-user"
+                                        class="img-posted">
                                 </a>
                                 <br>
                             @endif
@@ -56,8 +57,9 @@
                             @endif
                             <p class="mt-3">
                                 @if ($data->reply_image)
-                                    <a href="/img/img-posted-user/1.jpg" data-toggle="lightbox">
-                                        <img src="/img/img-posted-user/1.jpg" alt="img-posted-user" class="img-posted">
+                                    <a href="{{ asset('storage/' . $data->reply_image) }}" data-toggle="lightbox">
+                                        <img src="{{ asset('storage/' . $data->reply_image) }}" alt="img-posted-user"
+                                            class="img-posted">
                                     </a>
                                     <br>
                                 @endif
@@ -201,7 +203,7 @@
                     <input type="hidden" name="id_post" value="{{ $posts->id_post }}">
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label">Detail</label>
+                            <label class="form-label">Comments</label>
                             <textarea class="form-control @error('reply_text') is-invalid @enderror" rows="3" name="reply_text" autocomplete="off"
                                 required></textarea>
                             @error('reply_text')

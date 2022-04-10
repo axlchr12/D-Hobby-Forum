@@ -5,14 +5,19 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
 let invalidFeedback = document.querySelectorAll('.invalid-feedback');
 invalidFeedback.forEach(element => {
-  let myModal = new bootstrap.Modal(document.getElementById("startDiscussion"), {});
-  if (element.childNodes.length == 0) {
-    console.log('ok aman');
-  } else {
-    console.log('ok ada');
-    myModal.show();
-  }
-});
+    if (document.getElementById('startDiscussion')) {
+      var myModal = new bootstrap.Modal(document.getElementById("startDiscussion"), {});
+    } else {
+      var myModal = new bootstrap.Modal(document.getElementById("replyDiscussion"), {});
+    }
+    if (element.childNodes.length == 0) {
+      console.log('ok aman');
+    } else {
+      console.log('ok ada');
+      myModal.show();
+    }
+  });
+
 
 // form
 let elmSelect = document.getElementById('sort');

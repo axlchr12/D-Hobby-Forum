@@ -171,9 +171,9 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Image Discussion</label>
-                            <input type="file" class="form-control @error('image') is-invalid @enderror"
-                                name="img_discussion">
-                            @error('image')
+                            <input type="file" class="form-control @error('image_discussion') is-invalid @enderror"
+                                name="image_discussion">
+                            @error('image_discussion')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>

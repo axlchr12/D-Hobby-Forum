@@ -57,12 +57,12 @@ class ForumController extends Controller
         $validatedData = $request->validate([
             'title_discussion' => 'required|max:70|unique:posts,title_discussion',
             'detail_discussion' => 'required|max:1000',
-            'image' => 'image|file',
+            'image_discussion' => 'image|file|max:5120',
             'type_discussion' => 'required',
         ]);
         // Upload Image
-        if ($request->file('image')) {
-            $validatedData['image_discussion'] = $request->file('image')->store('post-images');
+        if ($request->file('image_discussion')) {
+            $validatedData['image_discussion'] = $request->file('image_discussion')->store('post-images');
         }
 
         if (auth()->user()) {
@@ -82,8 +82,8 @@ class ForumController extends Controller
             'reply_image' => 'image|file',
         ]);
         $validatedData['id_post'] = $request->input('id_post');
-        if ($request->file('image')) {
-            $validatedData['reply_image'] = $request->file('image')->store('post-images');
+        if ($request->file('reply_image')) {
+            $validatedData['reply_image'] = $request->file('reply_image')->store('img-posted-user');
         }
 
         if (auth()->user()) {
@@ -99,14 +99,55 @@ class ForumController extends Controller
     public function delete(Request $request) {
         if ($request->input('type') === 'posts') {
             $id_post = $request->input('id_post');
-            Posts::find($id_post)->delete();
-            Comments::where('id_post', $id_post)->delete();
+            $posts = Posts::find($id_post);
+            $comments = Comments::where('id_post', $id_post)->get();
+            // Fix jika hapus 1 postingan, maka hapus semua gambar yang ada
+            // jika post ada gambar & komen ada gambar 1 -> positif, kehapus
+            // jika post ada gambar & komen ada gambar lebih dari 1 -> positif, kehapus
+            // jika post ada gambar & komen ada gambar & no gambar -> positif, kehapus
+            // jika post no gambar & komen no gambar -> positif, kehapus
+            // jika post no gambar & komen banyak no gambar -> positif, kehapus
+            // jika post no gambar & komen ada gambar 1 -> positif, kehapus
+            // jika post no gambar & komen ada gambar lebih dari 1 -> positif, kehapus
+            // jika post no gambar & komen ada gambar & no gambar -> positif, kehapus
+
+            foreach ($comments as $data) {
+                if ($data->count() >= 1) {
+                    if ($posts->image_discussion && $data->reply_image) {
+                        Storage::delete([$posts->image_discussion, $data->reply_image]);
+                        $data->delete();
+                    } else if ($data->reply_image) {
+                        Storage::delete($data->reply_image);
+                        $data->delete();
+                    } else {
+                        $data->delete();
+                    }
+                } else {
+                    if ($posts->image_discussion && $data[0]->reply_image) {
+                        Storage::delete([$posts->image_discussion, $data[0]->reply_image]);
+                        $data[0]->delete();
+                    } else if ($data[0]->reply_image) {
+                        Storage::delete($data[0]->reply_image);
+                        $data[0]->delete();
+                    } else {
+                        $data[0]->delete();
+                    }
+                }
+            }
+           
+            $posts->delete();
+            
+
             return redirect()->to('/')->with('success', 'Success Delete Discussion!');
         }
 
         if ($request->input('type') === 'comments') {
             $id_comments = $request->input('id_comments');
-            Comments::find($id_comments)->delete();
+            $comments = Comments::find($id_comments);
+            if ($comments->reply_image) {
+                Storage::delete($comments->reply_image);
+            }
+            $comments->delete();
             return redirect()->back()->with('success', 'Success Delete Reply!');
         }
     }
