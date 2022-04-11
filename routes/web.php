@@ -33,3 +33,8 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/doLogin', 'doLogin');
     Route::get('/logout', 'doLogout');
 });
+
+Route::get('/create-symbolic', function () {
+    symlink(storage_path('/app/public'), public_path('storage'));
+    echo "symlink Created, Thabks";
+});
