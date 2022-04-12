@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ForumController;
+use App\Http\Controllers\CheckInputController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,4 +34,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/doLogin', 'doLogin');
     Route::get('/logout', 'doLogout');
 });
+
+Route::get('/checkInput', [CheckInputController::class, 'index']);
+Route::post('/process', [CheckInputController::class, 'process']);
 
