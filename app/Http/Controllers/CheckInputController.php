@@ -36,6 +36,6 @@ class CheckInputController extends Controller
             $text = '0% matches';
         }
 
-        return redirect()->back()->with('success', "Input 2 has $text with input 1");
+        return redirect()->back()->with('success', "Input 2 ($input2) has $text with input 1 ($input1)");
     }
 }
