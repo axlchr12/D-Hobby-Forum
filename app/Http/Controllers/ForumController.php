@@ -119,7 +119,6 @@ class ForumController extends Controller
                     if ($posts->image_discussion && $data->reply_image) {
                         $data->delete();
                     } else if ($data->reply_image) {
-                        Storage::delete($data->reply_image);
                         $data->delete();
                     } else {
                         $data->delete();
