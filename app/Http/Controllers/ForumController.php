@@ -117,7 +117,6 @@ class ForumController extends Controller
             foreach ($comments as $data) {
                 if ($data->count() >= 1) {
                     if ($posts->image_discussion && $data->reply_image) {
-                        Storage::delete([$posts->image_discussion, $data->reply_image]);
                         $data->delete();
                     } else if ($data->reply_image) {
                         Storage::delete($data->reply_image);
@@ -127,10 +126,8 @@ class ForumController extends Controller
                     }
                 } else {
                     if ($posts->image_discussion && $data[0]->reply_image) {
-                        Storage::delete([$posts->image_discussion, $data[0]->reply_image]);
                         $data[0]->delete();
                     } else if ($data[0]->reply_image) {
-                        Storage::delete($data[0]->reply_image);
                         $data[0]->delete();
                     } else {
                         $data[0]->delete();
@@ -147,9 +144,6 @@ class ForumController extends Controller
         if ($request->input('type') === 'comments') {
             $id_comments = $request->input('id_comments');
             $comments = Comments::find($id_comments);
-            if ($comments->reply_image) {
-                Storage::delete($comments->reply_image);
-            }
             $comments->delete();
             return redirect()->back()->with('success', 'Success Delete Reply!');
         }
