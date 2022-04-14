@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Posts;
 use App\Models\Type;
+use App\Http\Controllers\CloudinaryStorage;
 
 class ForumController extends Controller
 {
@@ -62,7 +63,8 @@ class ForumController extends Controller
         ]);
         // Upload Image
         if ($request->file('image_discussion')) {
-            $validatedData['image_discussion'] = $request->file('image_discussion')->store('post-images');
+            $response = $request->file('image_discussion')->storeOnCloudinary("forum/img-posted");
+            $validatedData['image_discussion'] = $response->getSecurePath();
         }
 
         if (auth()->user()) {
@@ -83,7 +85,8 @@ class ForumController extends Controller
         ]);
         $validatedData['id_post'] = $request->input('id_post');
         if ($request->file('reply_image')) {
-            $validatedData['reply_image'] = $request->file('reply_image')->store('img-posted-user');
+            $response = $request->file('reply_image')->storeOnCloudinary("forum/user-img-reply");
+            $validatedData['reply_image'] = $response->getSecurePath();
         }
 
         if (auth()->user()) {

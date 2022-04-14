@@ -25,8 +25,8 @@
                         @endif
                         <p class="mt-3">
                             @if ($posts->image_discussion)
-                                <a href="{{ asset('storage/' . $posts->image_discussion) }}" data-toggle="lightbox">
-                                    <img src="{{ asset('storage/' . $posts->image_discussion) }}" alt="img-posted-user"
+                                <a href="{{ $posts->image_discussion }}" data-toggle="lightbox">
+                                    <img src="{{ $posts->image_discussion }}" alt="img-posted-user"
                                         class="img-posted">
                                 </a>
                                 <br>
@@ -57,8 +57,8 @@
                             @endif
                             <p class="mt-3">
                                 @if ($data->reply_image)
-                                    <a href="{{ asset('storage/' . $data->reply_image) }}" data-toggle="lightbox">
-                                        <img src="{{ asset('storage/' . $data->reply_image) }}" alt="img-posted-user"
+                                    <a href="{{ $data->reply_image }}" data-toggle="lightbox">
+                                        <img src="{{ $data->reply_image }}" alt="img-posted-user"
                                             class="img-posted">
                                     </a>
                                     <br>
